@@ -8,6 +8,7 @@ import { initializeDatabase } from './config/db.js';
 const app = express();
 app.use(express.json());
 
+app.use('/uploads', express.static('uploads'));
 app.use('/', produtosRoutes);
 app.use('/', categoriasRoutes);
 app.use('/images', express.static(path.resolve('uploads/images')));

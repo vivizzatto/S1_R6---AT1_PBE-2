@@ -1,4 +1,4 @@
-import { pool } from '../config/db.js';
+import {connection} from '../config/db.js';
 
 const produtosModel = {
 
@@ -8,13 +8,13 @@ const produtosModel = {
       FROM produtos p
       INNER JOIN categorias c ON p.id_categoria = c.id_categoria
     `;
-    const [rows] = await pool.query(sql);
+    const [rows] = await connection.query(sql);
     return rows;
   },
 
   selectByProduto: async (id) => {
     const sql = 'SELECT * FROM produtos WHERE id_produto = ?';
-    const [rows] = await pool.query(sql, [id]);
+    const [rows] = await connection.query(sql, [id]);
     return rows;
   },
 
@@ -24,7 +24,7 @@ const produtosModel = {
       (id_categoria, nome_produto, valor_produto, vinculo_imagem)
       VALUES (?, ?, ?, ?)
     `;
-    const [result] = await pool.query(sql, [idCategoria, nome, valor, imagem]);
+    const [result] = await connection.query(sql, [idCategoria, nome, valor, imagem]);
     return result;
   },
 
@@ -34,13 +34,13 @@ const produtosModel = {
       SET id_categoria=?, nome_produto=?, valor_produto=?, vinculo_imagem=?
       WHERE id_produto=?
     `;
-    const [result] = await pool.query(sql, [idCategoria, nome, valor, imagem, id]);
+    const [result] = await connection.query(sql, [idCategoria, nome, valor, imagem, id]);
     return result;
   },
 
   deleteProduto: async (id) => {
     const sql = 'DELETE FROM produtos WHERE id_produto=?';
-    const [result] = await pool.query(sql, [id]);
+    const [result] = await connection.query(sql, [id]);
     return result;
   }
 

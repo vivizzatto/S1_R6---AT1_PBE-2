@@ -1,16 +1,16 @@
-import { pool } from '../config/db.js';
+import {connection} from '../config/db.js';
 
 const categoriasModel = {
 
   selectAll: async () => {
     const sql = 'SELECT * FROM categorias';
-    const [rows] = await pool.query(sql);
+    const [rows] = await connection.query(sql);
     return rows;
   },
 
   selectById: async (id) => {
     const sql = 'SELECT * FROM categorias WHERE id_categoria = ?';
-    const [rows] = await pool.query(sql, [id]);
+    const [rows] = await connection.query(sql, [id]);
     return rows;
   },
 
@@ -19,7 +19,7 @@ const categoriasModel = {
       INSERT INTO categorias (descricao_categoria)
       VALUES (?)
     `;
-    const [result] = await pool.query(sql, [descricao]);
+    const [result] = await connection.query(sql, [descricao]);
     return result;
   },
 
@@ -29,13 +29,13 @@ const categoriasModel = {
       SET descricao_categoria = ?
       WHERE id_categoria = ?
     `;
-    const [result] = await pool.query(sql, [descricao, id]);
+    const [result] = await connection.query(sql, [descricao, id]);
     return result;
   },
 
   delete: async (id) => {
     const sql = 'DELETE FROM categorias WHERE id_categoria = ?';
-    const [result] = await pool.query(sql, [id]);
+    const [result] = await connection.query(sql, [id]);
     return result;
   }
 
